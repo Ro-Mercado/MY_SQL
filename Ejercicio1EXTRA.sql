@@ -50,9 +50,14 @@ order by j.altura desc limit 1;
 -- 14. Mostrar la media de puntos en partidos de los equipos de la división Pacific.
 select AVG(p.puntos_local+p.puntos_visitante), e.nombre
 from partido p, equipo e
-where e.division='Pacific' and e.nombre=p.equipo_local and p.equipo_local=p.equipo_visitante
+where e.division='Pacific' and (e.nombre=p.equipo_local OR e.nombre=p.equipo_visitante)
 group by e.nombre;
 
+SELECT e.nombre, AVG(p.puntos_local+p.puntos_visitante)"Puntos promedio por partido como Local", SUM(p.puntos_local), sum(p.puntos_visitante) , count(p.puntos_local), count(p.puntos_visitante) FROM equipo e 
+INNER JOIN partido p 
+ON p.equipo_local = e.nombre or p.equipo_visitante=e.nombre
+WHERE e.division= "Pacific" 
+GROUP BY e.nombre;
 /*SOLUCION RENZO -> SELECT e.nombre, AVG(p.puntos_local) "Puntos promedio por partido como Local" FROM equipo e INNER JOIN partido p ON p.equipo_local = e.nombre WHERE e.division= "Pacific" GROUP BY e.nombre;
 
 SELECT e.nombre, AVG(p.puntos_visitante) "Puntos promedio por partido como Visitante" FROM equipo e INNER JOIN partido p ON p.equipo_visitante = e.nombre WHERE e.division= "Pacific" GROUP BY e.nombre;
@@ -62,8 +67,7 @@ select* from partido ;
 select equipo_local, equipo_visitante, MAX(ABS(puntos_local-puntos_visitante)) as DIFERENCIA -- ABS() Valor absoluto 
 from partido;
 -- 16. Mostrar la media de puntos en partidos de los equipos de la división Pacific.
-SELECT AVG(p.puntos_local+p.puntos_visitante), e.nombre, e.division from partido p, equipo e
-where e.division='Pacific'
+
 -- 17. Mostrar los puntos de cada equipo en los partidos, tanto de local como de visitante.
 
 -- 18. Mostrar quien gana en cada partido (codigo, equipo_local, equipo_visitante, equipo_ganador), en caso de empate sera null.
